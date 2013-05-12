@@ -11,8 +11,8 @@ You need to have the latest [CUDA release](https://developer.nvidia.com/cuda-dow
 Since this package is not currently available on CRAN, the easiest way to try it out is to get it via `devtools`:
 
 ```R
-> install.packages("devtools")
-> devtools::install_github("rcurand", "kashif")
+install.packages("devtools")
+devtools::install_github("rcurand", "kashif")
 ```
 
 ## Usage
@@ -20,11 +20,11 @@ Since this package is not currently available on CRAN, the easiest way to try it
 We can then load the package and generate random numbers:
 
 ```R
-> library(Rcurand)
-> curand <- new(Rcurand, 100)
-> curand$setPseudoRandomGeneratorSeed(1234)
+library(Rcurand)
+curand <- new(Rcurand, 100)
+curand$setPseudoRandomGeneratorSeed(1234)
 [1] 0
-> curand$generateNormal(20, 30.3, 2.0)
+curand$generateNormal(20, 30.3, 2.0)
  [1] 31.01748 27.82081 30.11701 29.53976 29.01008 30.23948 29.61954 27.30938 31.07547 32.31911
 [11] 31.90599 28.58359 33.01653 32.58759 32.17076 33.93873 28.52211 31.63219 33.89073 30.49847
 ```
