@@ -1,0 +1,15 @@
+Package: Rcurand
+Type: Package
+Title: CURAND GPU random number host API binding for R.
+Version: 0.1
+Date: 2013-04-07
+Authors@R: c(
+    person("Kashif", "Rasul", role = c("aut", "cre"),
+    email = "kashif.rasul@gmail.com")
+    )
+Maintainer: Kashif Rasul <kashif.rasul@gmail.com>
+Description: This package provides bindings to NVIDIA's CURAND GPU random number host API.
+License: MIT
+Depends: methods, Rcpp (>= 0.10.3)
+LinkingTo: Rcpp
+RcppModules: Rcurand_module
