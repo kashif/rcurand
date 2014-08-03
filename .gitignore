@@ -4,3 +4,4 @@
 .Rhistory
 inst/doc
 
+packrat/lib*/
