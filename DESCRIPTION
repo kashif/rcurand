@@ -10,6 +10,6 @@ Authors@R: c(
 Maintainer: Kashif Rasul <kashif.rasul@gmail.com>
 Description: This package provides bindings to NVIDIA's CURAND GPU random number host API.
 License: MIT
-Depends: methods, Rcpp (>= 0.10.3)
+Depends: methods, Rcpp (>= 0.11.5)
 LinkingTo: Rcpp
 RcppModules: Rcurand_module
