@@ -3,6 +3,7 @@
 #include <curand.h>
 
 using namespace Rcpp;
+using namespace std;
 
 class Rcurand {
 public:
@@ -18,38 +19,51 @@ public:
 
   NumericVector generateUniform(size_t num)
   {
-    NumericVector hostData(num);
+    vector<float> hostData(num);
 
-    cudaMalloc((void **)&devData_, num*sizeof(double));
-    curandGenerateUniformDouble(gen_, devData_, num);
-    cudaMemcpy(hostData.begin() , devData_ , num * sizeof(double), cudaMemcpyDeviceToHost);
+    cudaMalloc((void **)&devData_, num*sizeof(float));
+    curandGenerateUniform(gen_, devData_, num);
+    cudaMemcpy(&(hostData[0]), devData_, num * sizeof(float), cudaMemcpyDeviceToHost);
     cudaFree(devData_);
 
-    return hostData;
+    return wrap(hostData);
   }
 
   NumericVector generateNormal(size_t num, float mean=0.0f, float stddev=1.0f)
   {
-    NumericVector hostData(num);
+    vector<float> hostData(num);
 
-    cudaMalloc((void **)&devData_, num*sizeof(double));
-    curandGenerateNormalDouble(gen_, devData_, num, mean, stddev);
-    cudaMemcpy(hostData.begin() , devData_ , num * sizeof(double), cudaMemcpyDeviceToHost);
+    cudaMalloc((void **)&devData_, num*sizeof(float));
+    curandGenerateNormal(gen_, devData_, num, mean, stddev);
+    cudaMemcpy(&(hostData[0]), devData_, num * sizeof(float), cudaMemcpyDeviceToHost);
     cudaFree(devData_);
 
-    return hostData;
+    return wrap(hostData);
   }
 
   NumericVector generateLogNormal(size_t num, float mean=0.0f, float stddev=1.0f)
   {
-    NumericVector hostData(num);
+    vector<float> hostData(num);
 
-    cudaMalloc((void **)&devData_, num*sizeof(double));
-    curandGenerateLogNormalDouble(gen_, devData_, num, mean, stddev);
-    cudaMemcpy(hostData.begin() , devData_ , num * sizeof(double), cudaMemcpyDeviceToHost);
+    cudaMalloc((void **)&devData_, num*sizeof(float));
+    curandGenerateLogNormal(gen_, devData_, num, mean, stddev);
+    cudaMemcpy(&(hostData[0]), devData_, num * sizeof(float), cudaMemcpyDeviceToHost);
     cudaFree(devData_);
 
-    return hostData;
+    return wrap(hostData);
+  }
+
+  NumericVector generatePoisson(size_t num, float lambda)
+  {
+    vector<unsigned int> hostData(num);
+    unsigned int *devData;
+
+    cudaMalloc((void **)&devData, num*sizeof(unsigned int));
+    curandGeneratePoisson(gen_, devData, num, (double)lambda);
+    cudaMemcpy(&(hostData[0]), devData, num * sizeof(unsigned int), cudaMemcpyDeviceToHost);
+    cudaFree(devData);
+
+    return wrap(hostData);
   }
 
   ~Rcurand()
@@ -59,6 +73,6 @@ public:
 
 private:
   curandGenerator_t gen_;
-  double *devData_;
+  float *devData_;
 };
 
